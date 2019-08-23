@@ -31,6 +31,7 @@ type agentCommand struct {
 	clientOptions
 	*http.ServerOptions
 
+	dropConn       bool
 	iptables       bool
 	iptablesRemove bool
 	hostIP         string
@@ -53,6 +54,7 @@ func (cmd *agentCommand) Bind(parser parser) {
 	parser.Flag("iptables-remove", "Remove iptables rules at shutdown").Default("true").BoolVar(&cmd.iptablesRemove)
 	parser.Flag("host", "Host IP address.").Envar("HOST_IP").Required().StringVar(&cmd.hostIP)
 	parser.Flag("host-interface", "Network interface for pods to configure IPTables.").Default("docker0").StringVar(&cmd.hostInterface)
+	parser.Flag("drop-conn", "Drop existing TCP Connections to Metadata API").Default("false").BoolVar(&cmd.iptables)
 }
 
 func (opts *agentCommand) Run() {
@@ -68,6 +70,15 @@ func (opts *agentCommand) Run() {
 		if opts.iptablesRemove {
 			defer rules.Remove()
 		}
+	}
+
+	if opts.dropConn {
+		log.Infof("dropping TCP connections to metadata API")
+		matched, err := newConntrackFilter()
+		if err != nil {
+			log.Fatal("unable to drop connections:", err.Error())
+		}
+		log.Infof("dropped %d connections", matched)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())

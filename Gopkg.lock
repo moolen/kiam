@@ -352,6 +352,25 @@
   revision = "475c8175b34078cf65b89a5660f1e5a921c9c773"
 
 [[projects]]
+  digest = "1:2d9d06cb9d46dacfdbb45f8575b39fc0126d083841a29d4fbf8d97708f43107e"
+  name = "github.com/vishvananda/netlink"
+  packages = [
+    ".",
+    "nl",
+  ]
+  pruneopts = "UT"
+  revision = "a2ad57a690f3caf3015351d2d6e1c0b95c349752"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:b405c6b13f8f88fde0aab3e5c566554fc7c2c5579dc5de603a188d4e44db2712"
+  name = "github.com/vishvananda/netns"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "7109fa855b0ff1ebef7fbd2f6aa613e8db7cfbc0"
+
+[[projects]]
   digest = "1:dd1a3f5a0d4ec27669062b10013515233c4fef35b876f339d838495d0c8d6b67"
   name = "github.com/vmg/backoff"
   packages = ["."]
@@ -690,6 +709,7 @@
     "github.com/prometheus/client_golang/prometheus/promhttp",
     "github.com/sirupsen/logrus",
     "github.com/uswitch/k8sc/official",
+    "github.com/vishvananda/netlink",
     "github.com/vmg/backoff",
     "golang.org/x/net/context",
     "google.golang.org/grpc",
